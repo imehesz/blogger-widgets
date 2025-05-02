@@ -51,8 +51,9 @@ async function main() {
         const rawContent = post.content.$t;
         const cleanText = stripHTML(rawContent);
         const excerpt = getFirstSentences(cleanText, 5);
+        const link = post.link.find(l => l.rel === 'alternate')?.href || 'No link found';
 
-        const result = { title, published, excerpt };
+        const result = { title, published, excerpt, link };
 
         fs.writeFileSync(`${outPutFile}`, JSON.stringify(result, null, 2));
         console.log(`Saved latest post to ${outPutFile}`);
